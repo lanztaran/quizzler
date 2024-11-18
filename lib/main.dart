@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'question_bank.dart';
-import 'scorekeeper.dart';
+import 'scorekeeper.dart'; // Import the new file
 
 void main() => runApp(Quizzler());
 
@@ -27,16 +27,17 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-
   Question_bank qb = Question_bank();
   List<Icon> scorekeeper = [];
-  late QuizLogic quizLogic;
+  late QuizLogic quizLogic; // Declare QuizLogic
 
   @override
   void initState() {
     super.initState();
-    quizLogic = QuizLogic(qb, scorekeeper);
+    quizLogic = QuizLogic(qb, scorekeeper); // Initialize QuizLogic
+  }
 
+  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,8 +73,10 @@ class _QuizPageState extends State<QuizPage> {
                   fontSize: 20.0,
                 ),
               ),
-              onPressed: () {
-                quizLogic.checkAnswer(true);
+              onPressed: qb.item >= qb.qobj.length - 1 ? null : () {
+                setState(() {
+                  quizLogic.checkAnswer(true);
+                });
               },
             ),
           ),
@@ -92,14 +95,16 @@ class _QuizPageState extends State<QuizPage> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () {
-                quizLogic.checkAnswer(false);
+              onPressed: qb.item >= qb.qobj.length - 1 ? null : () {
+                setState(() {
+                  quizLogic.checkAnswer(false);
+                });
               },
             ),
           ),
         ),
-        Row (
-          children: quizLogic.scorekeeper,
+        Row(
+          children: scorekeeper,
         )
       ],
     );

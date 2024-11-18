@@ -26,8 +26,8 @@ class Question_bank{
     return qobj[item].sagot;
   }
 
-  void nextItem () {
-    if (item<12) {
+  void nextItem() {
+    if (item < qobj.length - 1) {
       item++;
     }
   }

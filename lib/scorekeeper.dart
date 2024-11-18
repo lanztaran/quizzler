@@ -7,8 +7,12 @@ class QuizLogic {
 
   QuizLogic(this.qb, this.scorekeeper);
 
-  void checkAnswer(bool A) {
-    if (qb.getAnswer() == A) {
+  void checkAnswer(bool answer) {
+    if (qb.item >= qb.qobj.length - 1) {
+      return;
+    }
+
+    if (qb.getAnswer() == answer) {
       scorekeeper.add(
         Icon(Icons.check, color: Colors.greenAccent),
       );
