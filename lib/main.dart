@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'question_bank.dart';
-import 'scorekeeper.dart'; // Import the new file
+import 'score_page.dart'; // Import the ScorePage
+import 'scorekeeper.dart';
 
 void main() => runApp(Quizzler());
 
@@ -29,12 +30,27 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   Question_bank qb = Question_bank();
   List<Icon> scorekeeper = [];
-  late QuizLogic quizLogic; // Declare QuizLogic
+  late QuizLogic quizLogic;
 
   @override
   void initState() {
     super.initState();
-    quizLogic = QuizLogic(qb, scorekeeper); // Initialize QuizLogic
+    quizLogic = QuizLogic(qb, scorekeeper);
+  }
+
+  void checkQuizCompletion() {
+    if (qb.item >= qb.qobj.length - 1) {
+      // Navigate to ScorePage
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ScorePage(
+            score: quizLogic.getScore(), // Pass the score
+            totalQuestions: qb.qobj.length,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -73,9 +89,12 @@ class _QuizPageState extends State<QuizPage> {
                   fontSize: 20.0,
                 ),
               ),
-              onPressed: qb.item >= qb.qobj.length - 1 ? null : () {
+              onPressed: qb.item >= qb.qobj.length - 1
+                  ? null
+                  : () {
                 setState(() {
                   quizLogic.checkAnswer(true);
+                  checkQuizCompletion(); // Check for completion
                 });
               },
             ),
@@ -95,9 +114,12 @@ class _QuizPageState extends State<QuizPage> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: qb.item >= qb.qobj.length - 1 ? null : () {
+              onPressed: qb.item >= qb.qobj.length - 1
+                  ? null
+                  : () {
                 setState(() {
                   quizLogic.checkAnswer(false);
+                  checkQuizCompletion(); // Check for completion
                 });
               },
             ),

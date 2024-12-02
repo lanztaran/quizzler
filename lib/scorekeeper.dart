@@ -3,24 +3,23 @@ import 'question_bank.dart';
 
 class QuizLogic {
   final Question_bank qb;
-  List<Icon> scorekeeper;
+  final List<Icon> scorekeeper;
+  int score = 0;
 
   QuizLogic(this.qb, this.scorekeeper);
 
-  void checkAnswer(bool answer) {
-    if (qb.item >= qb.qobj.length - 1) {
-      return;
-    }
-
-    if (qb.getAnswer() == answer) {
-      scorekeeper.add(
-        Icon(Icons.check, color: Colors.greenAccent),
-      );
+  void checkAnswer(bool userAnswer) {
+    if (qb.getAnswer() == userAnswer) {
+      score++;
+      scorekeeper.add(Icon(Icons.check, color: Colors.green));
     } else {
-      scorekeeper.add(
-        Icon(Icons.close, color: Colors.redAccent),
-      );
+      scorekeeper.add(Icon(Icons.close, color: Colors.red));
     }
     qb.nextItem();
   }
+
+  int getScore() {
+    return score;
+  }
 }
+

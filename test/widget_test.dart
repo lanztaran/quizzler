@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:nov18/main.dart';
+import 'package:nov18/main.dart'; // Make sure this path is correct
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -21,7 +21,7 @@ void main() {
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pump(); // Rebuild the widget after the state has changed.
 
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
